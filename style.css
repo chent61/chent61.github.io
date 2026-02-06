@@ -1,0 +1,223 @@
+:root{
+  --bg1:#ffdde1;
+  --bg2:#ee9ca7;
+  --card:#ffffffcc;
+  --text:#111827;
+  --muted:#374151;
+  --yes:#22c55e;
+  --no:#ef4444;
+  --shadow: 0 20px 60px rgba(0,0,0,.16);
+}
+
+*{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;}
+html, body { height: 100%; }
+
+body{
+  margin:0;
+  min-height:100vh;
+  /* iOS dynamic viewport (prevents jumpy centering) */
+  min-height: 100dvh;
+  display:grid;
+  place-items:center;
+  background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+  color:var(--text);
+  overflow:hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* BIG popmart-ish background */
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:.95;
+}
+.bg-img{
+  position:absolute;
+  left: var(--x);
+  top: var(--y);
+  width:min(46vw, 560px);
+  height:auto;
+  filter: drop-shadow(0 22px 34px rgba(0,0,0,.22));
+  opacity:.88;
+  transform: rotate(var(--r)) scale(var(--s));
+  animation: floaty var(--d) ease-in-out infinite;
+}
+@keyframes floaty{
+  0%,100%{ transform: translateY(0) rotate(var(--r)) scale(var(--s)); }
+  50%{ transform: translateY(-14px) rotate(calc(var(--r) + 1.5deg)) scale(var(--s)); }
+}
+
+/* Card / screens */
+.screen{
+  width:min(700px, 92vw);
+  padding:30px;
+  border-radius:24px;
+  background:var(--card);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+  text-align:center;
+  position:relative;
+  z-index:2;
+}
+.hidden{display:none;}
+
+h1{margin:0 0 10px;font-size:clamp(26px, 4.2vw, 44px);}
+
+.line2{
+  margin-top:6px;
+  color:var(--muted);
+  font-weight:700;
+  letter-spacing:.2px;
+}
+.line2 .icons{
+  display:block;
+  margin-top:8px;
+  font-size:22px;
+}
+
+/* Button area: side-by-side centered */
+.stage{margin-top:22px; display:flex; justify-content:center;}
+.arena{
+  position:relative;
+  width:min(540px, 88vw);
+  height:120px;              /* more vertical space on phones */
+  touch-action:none;         /* iOS: prevent scroll/zoom gestures */
+}
+
+/* Buttons */
+.btn{
+  border:0;
+  padding:12px 18px;
+  border-radius:999px;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 12px 28px rgba(0,0,0,.12);
+  transition: transform .12s ease, filter .12s ease, background .2s ease;
+  user-select:none;
+  -webkit-user-select:none;
+  white-space:nowrap;
+  position:absolute;
+  top:50%;
+  transform: translateY(-50%);
+  will-change:left, top, transform;
+  touch-action:none;         /* iOS: make tap feel instant */
+}
+.btn:hover{filter:brightness(1.05); transform: translateY(-50%) translateY(-1px);}
+.btn:active{transform: translateY(-50%) scale(.98);}
+
+.yes{background:var(--yes); color:white;}
+.no{background:var(--no); color:white;}
+
+/* Shake */
+@keyframes shake {
+  0%,100% { transform: translateY(-50%) translateX(0); }
+  20% { transform: translateY(-50%) translateX(-4px); }
+  40% { transform: translateY(-50%) translateX(4px); }
+  60% { transform: translateY(-50%) translateX(-3px); }
+  80% { transform: translateY(-50%) translateX(3px); }
+}
+.shaking{ animation: shake .35s linear 1; }
+
+/* Dramatic dodge effects */
+@keyframes panic {
+  0%   { transform: translateY(-50%) scale(1) rotate(0deg); }
+  20%  { transform: translateY(-50%) scale(1.08) rotate(-8deg); }
+  40%  { transform: translateY(-50%) scale(0.95) rotate(8deg); }
+  60%  { transform: translateY(-50%) scale(1.12) rotate(-6deg); }
+  80%  { transform: translateY(-50%) scale(0.98) rotate(6deg); }
+  100% { transform: translateY(-50%) scale(1) rotate(0deg); }
+}
+.panic { animation: panic 0.45s cubic-bezier(.36,.07,.19,.97); }
+
+/* Confetti */
+.confetti{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:10;
+  overflow:hidden;
+}
+.confetti i{
+  position:absolute;
+  width:10px;
+  height:16px;
+  border-radius:3px;
+  opacity:.95;
+  top:-20px;
+  animation: fall linear forwards;
+}
+@keyframes fall{
+  to{ transform: translateY(110vh) rotate(720deg); }
+}
+
+/* Screen 2: inner white box */
+.contentBox{
+  position:relative;
+  width:min(640px, 100%);
+  margin:0 auto;
+  background:#fff;
+  border-radius:20px;
+  padding:22px 18px 18px;
+  box-shadow: 0 14px 34px rgba(0,0,0,.12);
+}
+
+/* Photo in top corner of the white box */
+.cornerPhoto{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:92px;
+  height:92px;
+  border-radius:16px;
+  object-fit:cover;
+  box-shadow: 0 10px 24px rgba(0,0,0,.18);
+  border:3px solid rgba(255,255,255,.95);
+  background:#f3f4f6;
+}
+
+/* Screen 2 text */
+.big{font-size:clamp(28px, 5vw, 50px); margin:8px 0 8px;}
+.subtitle{margin:0;color:var(--muted);font-weight:700;}
+
+/* Plan card */
+.plan{
+  margin:16px auto 0;
+  width:min(600px, 100%);
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.08);
+  text-align:left;
+}
+.plan h2{margin:0 0 10px; font-size:18px;}
+.plan ul{margin:0; padding-left:18px; color:#1f2937;}
+.plan li{margin:8px 0;}
+
+.ctaRow{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:18px;}
+.cta{
+  display:inline-block;
+  padding:12px 18px;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:950;
+  box-shadow:0 12px 28px rgba(0,0,0,.12);
+  background:#111827;
+  color:#fff;
+  transition: transform .12s ease, filter .12s ease;
+}
+.cta:hover{filter:brightness(1.05); transform: translateY(-1px);}
+
+/* iPhone-friendly spacing */
+@media (max-width: 420px){
+  .screen{ padding:20px; }
+  .arena{ height:140px; }
+  .btn{ font-size:17px; padding:12px 16px; }
+  .cornerPhoto{
+    width:72px;
+    height:72px;
+    border-radius:14px;
+  }
+}
